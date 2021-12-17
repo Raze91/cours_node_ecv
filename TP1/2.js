@@ -5,7 +5,7 @@ const server = http.createServer((req, res) => {
     const response = {
         "message": "Hello World !",
         "status": 200
-    }
+    };
     
     res.setHeader("Content-Type", "application/json");
 

@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
         "lastname": "Hattab",
         "birthdate": "17/08/1999",
         "color": "blue"
-    }
+    };
 
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");

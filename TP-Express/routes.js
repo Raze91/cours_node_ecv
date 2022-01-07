@@ -1,7 +1,8 @@
+
 module.exports = function (app) {
 
     app.get("/hello-world", (req, res) => {
-        res.send({
+        res.json({
             "message": "Hello world !"
         })
     });
@@ -15,12 +16,10 @@ module.exports = function (app) {
     });
 
     app.post("/infos/headers", (req, res) => {
-        res.send(req.headers)
+        res.json(req.headers)
     })
 
     app.post("/payload", (req, res) => {
-        console.log(req.body)
-
         const dateArray = req.body.birthdate.split("/");
         const date = new Date(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);;
         const ageDiff = Date.now() - date.getTime();
@@ -43,6 +42,6 @@ module.exports = function (app) {
     });
 
     app.get("/params/:id/:key/:slug", (req, res) => {
-        res.send(req.params);
+        res.json(req.params);
     })
 } 

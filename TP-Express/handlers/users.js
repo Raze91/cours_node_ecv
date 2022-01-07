@@ -12,6 +12,10 @@ module.exports = function (app) {
         res.send("Create user");
     });
 
+    app.put("/users/:id", (req, res) => {
+        res.send(`Edit user id: ${req.params.id}`)
+    })
+
     app.delete("/users/:id", (req, res) => {
         res.send(`Delete user id: ${req.params.id}`).end();
     });

@@ -10,7 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-usersRoutes(app, User);
+usersRoutes(app, User, Post);
 rolesRoutes(app, Role);
 postsRoutes(app, Post, Comment);
 commentsRoutes(app, Comment);

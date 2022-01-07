@@ -15,8 +15,8 @@ module.exports = function (app, Post, Comment) {
         try {
             const post = await Post.findOne({ where: { id: req.params.id } });
 
-            if (req.query && req.query.string) {
-                const comments = await Comment.findAll({ include: [Post] })
+            if (req.query && req.query.comments === "yes") {
+                const comments = await Comment.findAll({ where: { postId: post.id } })
 
                 res.send({
                     "post": post,

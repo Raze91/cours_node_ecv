@@ -1,4 +1,6 @@
-module.exports = function (app, User) {
+const post = require("../models/post");
+
+module.exports = function (app, User, Post) {
 
     app.get("/users", async (req, res) => {
         try {
@@ -10,11 +12,21 @@ module.exports = function (app, User) {
             res.send("Error");
         }
     })
-    
+
     app.get("/users/:id", async (req, res) => {
         try {
             const user = await User.findOne({ where: { id: req.params.id } });
-            res.send(user);
+
+            if (req.query && req.query.posts === "yes") {
+                const posts = await Post.findAll({ where: { userId: user.id } })
+
+                res.send({
+                    "user": user,
+                    "posts": posts
+                });
+            } else {
+                res.send(user);
+            }
 
         } catch (e) {
             console.error(e);

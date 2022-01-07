@@ -19,7 +19,8 @@ function intPromise(a, b) {
 
 function datePromise(dateParam) {
     return new Promise((resolve, failure) => {
-        const date = new Date(dateParam);
+        const dateArray = dateParam.split("/");
+        const date = new Date(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);;
         const ageDiff = Date.now() - date.getTime();
         const ageDate = new Date(ageDiff); // miliseconds from epoch
         const age = Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -35,7 +36,7 @@ async function execute() {
     try {
         const promiseString = await string20("sdfdsf");
         const promiseInt = await intPromise(50, 10);
-        const promiseDate = await datePromise("1999/08/17");
+        const promiseDate = await datePromise("17/08/1999");
         console.log(promiseString);
         console.log(promiseInt)
         console.log(promiseDate)
@@ -53,7 +54,7 @@ function thenExecute() {
         .then(res => console.log(res))
         .catch(error => console.log(error));
 
-    datePromise("1999/08/17")
+    datePromise("17/08/1999")
         .then(res => console.log(res))
         .catch(error => console.error(error));
 }

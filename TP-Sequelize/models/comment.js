@@ -14,12 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Comment.belongsTo(models.Post, {
         foreignKey: {
           name: "id",
-        }
+        },
+        onDelete: "CASCADE"
       });
       Comment.belongsTo(models.User, {
         foreignKey: {
           name: 'id',
-        }
+        },
       });
     }
   };

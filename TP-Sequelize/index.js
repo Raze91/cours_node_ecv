@@ -1,18 +1,27 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { User, Role, Post, Comment } = require("./models");
-const usersRoutes = require("./Routes/users.routes");
-const rolesRoutes = require("./Routes/roles.routes");
-const postsRoutes = require("./Routes/posts.routes");
-const commentsRoutes = require("./Routes/comments.routes");
+
+const userRoutes = require("./Routes/user.routes");
+const userHandler = require("./handlers/user.handler");
+
+const roleRoutes = require("./Routes/role.routes");
+const roleHandler = require("./handlers/role.handler")
+
+const postRoutes = require("./Routes/post.routes");
+const postHandler = require("./handlers/post.handler")
+
+const commentRoutes = require("./Routes/comment.routes");
+const commentHandler = require("./handlers/comment.handler")
+
+
 
 const app = express();
 
 app.use(bodyParser.json());
 
-usersRoutes(app, User, Post);
-rolesRoutes(app, Role);
-postsRoutes(app, Post, Comment);
-commentsRoutes(app, Comment);
+userRoutes(app, userHandler);
+roleRoutes(app, roleHandler);
+postRoutes(app, postHandler);
+commentRoutes(app, commentHandler);
 
 app.listen(3000);

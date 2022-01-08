@@ -16,9 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Role, {
         foreignKey: {
           name: 'id',
-          type: DataTypes.UUID,
-          allowNull: true
-        }
+        },
       });
     }
   };
@@ -34,10 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     github: DataTypes.STRING,
+    roleId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'User',
-    roleId: DataTypes.UUID
   });
 
   return User;

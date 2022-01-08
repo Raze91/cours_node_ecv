@@ -29,7 +29,7 @@ module.exports = {
           model: 'Roles',
           key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

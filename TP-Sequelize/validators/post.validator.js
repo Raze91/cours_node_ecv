@@ -31,4 +31,8 @@ exports.getPostSchema = Joi.object({
     comments: Joi.array().items(commentDefinition)
 }).unknown(true);
 
+exports.getPostQuerySchema = Joi.object({
+    comments: Joi.boolean(),
+});
+
 exports.getAllPostsSchema = Joi.array().items(this.postDefinition).required();

@@ -35,4 +35,8 @@ exports.getUserSchema = Joi.object({
     posts: Joi.array().items(postDefinition)
 }).unknown(true);
 
+exports.getUserQuerySchema = Joi.object({
+    posts: Joi.boolean(),
+});
+
 exports.getAllUsersSchema = Joi.array().items(userDefinition).required();

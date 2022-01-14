@@ -2,7 +2,7 @@ module.exports = function (app, postHandler, validator, postValidators) {
 
     app.get("/posts", validator.response(postValidators.getAllPostsSchema), postHandler.getPosts);
 
-    app.get("/posts/:id", validator.response(postValidators.getPostSchema), postHandler.getPost);
+    app.get("/posts/:id", validator.response(postValidators.getPostSchema), validator.query(postValidators.getPostQuerySchema), postHandler.getPost);
 
     app.post("/posts", validator.body(postValidators.createPostSchema), postHandler.createPost);
 

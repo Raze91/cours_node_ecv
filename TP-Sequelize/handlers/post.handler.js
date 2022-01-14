@@ -15,7 +15,7 @@ exports.getPost = async function getPost(req, res) {
     try {
         const post = await Post.findOne({ where: { id: req.params.id } });
 
-        if (req.query && req.query.comments === "yes") {
+        if (req.query && req.query.comments === true) {
             const comments = await Comment.findAll({ where: { postId: post.id } })
 
             res.send({

@@ -14,7 +14,7 @@ exports.getUser = async function getUser(req, res) {
     try {
         const user = await User.findOne({ where: { id: req.params.id } });
 
-        if (req.query && req.query.posts === "yes") {
+        if (req.query && req.query.posts === true) {
             const posts = await Post.findAll({ where: { userId: user.id } })
 
             res.send({

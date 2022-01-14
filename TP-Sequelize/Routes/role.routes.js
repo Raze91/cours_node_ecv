@@ -1,12 +1,14 @@
-module.exports = function (app, roleHandler, validator, roleValidators) {
+const express = require("express");
+const router = express.Router();
 
-    app.get("/roles", validator.response(roleValidators.getAllRolesSchema), roleHandler.getRoles)
+const roleHandler = require("../handlers/role.handler");
+const roleValidators = require("../validators/role.validator");
+const validator = require('express-joi-validation').createValidator({});
 
-    app.get("/roles/:id", validator.response(roleValidators.getRoleSchema), roleHandler.getRole)
+router.get("/", validator.response(roleValidators.getAllRolesSchema), roleHandler.getRoles)
+router.get("/:id", validator.response(roleValidators.getRoleSchema), roleHandler.getRole)
+router.post("/", validator.body(roleValidators.createRoleSchema), roleHandler.createRole);
+router.patch("/:id", validator.body(roleValidators.editRoleSchema), roleHandler.editRole);
+router.delete("/:id", roleHandler.deleteRole);
 
-    app.post("/roles", validator.body(roleValidators.createRoleSchema), roleHandler.createRole);
-
-    app.patch("/roles/:id", validator.body(roleValidators.editRoleSchema), roleHandler.editRole);
-
-    app.delete("/roles/:id", roleHandler.deleteRole);
-}
+module.exports = router;

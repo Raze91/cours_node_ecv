@@ -1,12 +1,18 @@
-module.exports = function (app, postHandler, validator, postValidators) {
+const express = require("express");
+const router = express.Router();
 
-    app.get("/posts", validator.response(postValidators.getAllPostsSchema), postHandler.getPosts);
+const postHandler = require("../handlers/post.handler");
+const postValidators = require("../validators/post.validator");
+const { PostMiddleware } = require("../middlewares/post.middleware");
 
-    app.get("/posts/:id", validator.response(postValidators.getPostSchema), validator.query(postValidators.getPostQuerySchema), postHandler.getPost);
+const validator = require('express-joi-validation').createValidator({});
 
-    app.post("/posts", validator.body(postValidators.createPostSchema), postHandler.createPost);
+router.use(PostMiddleware);
 
-    app.patch("/posts/:id", validator.body(postValidators.editPostSchema), postHandler.editPost);
+router.get("/", validator.response(postValidators.getAllPostsSchema), postHandler.getPosts);
+router.get("/:id", validator.response(postValidators.getPostSchema), validator.query(postValidators.getPostQuerySchema), postHandler.getPost);
+router.post("/", validator.body(postValidators.createPostSchema), postHandler.createPost);
+router.patch("/:id", validator.body(postValidators.editPostSchema), postHandler.editPost);
+router.delete("/:id", postHandler.deletePost);
 
-    app.delete("/posts/:id", postHandler.deletePost);
-}
+module.exports = router;

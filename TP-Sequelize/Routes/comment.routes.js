@@ -1,12 +1,18 @@
-module.exports = function (app, commentHandler, validator, commentValidators) {
+const express = require("express");
+const router = express.Router();
 
-    app.get("/comments", validator.response(commentValidators.getAllCommentsSchema), commentHandler.getComments);
+const commentHandler = require("../handlers/comment.handler");
+const commentValidators = require("../validators/comment.validator");
+const { CommentMiddleware } = require("../middlewares/comment.middleware");
 
-    app.get("/comments/:id", validator.response(commentValidators.getCommentSchema), commentHandler.getComment);
+const validator = require('express-joi-validation').createValidator({});
 
-    app.post("/comments", validator.body(commentValidators.createCommentSchema), commentHandler.createComment);
+router.use(CommentMiddleware);
 
-    app.patch("/comments/:id", validator.body(commentValidators.editCommentSchema), commentHandler.editComment);
+router.get("/", validator.response(commentValidators.getAllCommentsSchema), commentHandler.getComments);
+router.get("/:id", validator.response(commentValidators.getCommentSchema), commentHandler.getComment);
+router.post("/", validator.body(commentValidators.createCommentSchema), commentHandler.createComment);
+router.patch("/:id", validator.body(commentValidators.editCommentSchema), commentHandler.editComment);
+router.delete("/:id", commentHandler.deleteComment);
 
-    app.delete("/comments/:id", commentHandler.deleteComment);
-}
+module.exports = router;

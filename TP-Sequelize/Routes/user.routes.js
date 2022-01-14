@@ -1,13 +1,18 @@
+const express = require("express");
+const router = express.Router();
 
-module.exports = function (app, userHandler, validator, userValidators) {
+const userHandler = require("../handlers/user.handler");
+const { UsersMiddleware } = require("../middlewares/user.middleware");
+const userValidators = require("../validators/user.validator");
+const validator = require('express-joi-validation').createValidator({});
 
-    app.get("/users", validator.response(userValidators.getAllUsersSchema), userHandler.getUsers);
 
-    app.get("/users/:id", validator.response(userValidators.getUserSchema), validator.query(userValidators.getUserQuerySchema) , userHandler.getUser);
+router.use(UsersMiddleware);
 
-    app.post("/users", validator.body(userValidators.createUserSchema), userHandler.createUser);
+router.get("/", validator.response(userValidators.getAllUsersSchema), userHandler.getUsers);
+router.get("/:id", validator.response(userValidators.getUserSchema), validator.query(userValidators.getUserQuerySchema), userHandler.getUser);
+router.post("/", validator.body(userValidators.createUserSchema), userHandler.createUser);
+router.patch("/:id", validator.body(userValidators.editUserSchema), userHandler.editUser);
+router.delete("/:id", userHandler.deleteUser);
 
-    app.patch("/users/:id", validator.body(userValidators.editUserSchema), userHandler.editUser);
-
-    app.delete("/users/:id", userHandler.deleteUser);
-}
+module.exports = router;

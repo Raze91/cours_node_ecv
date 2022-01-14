@@ -13,10 +13,10 @@ const app = express();
 
 
 app.use(bodyParser.json());
+
 app.use(globalMiddlewares.dateMiddleware);
 app.use(globalMiddlewares.ecvMiddleware);
 app.use(globalMiddlewares.authorizationMiddleware)
-
 
 app.use('/users', userRoutes);
 app.use('/posts', postsRoutes);

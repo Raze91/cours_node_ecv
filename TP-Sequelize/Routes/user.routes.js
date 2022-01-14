@@ -1,12 +1,13 @@
-module.exports = function (app, userHandler) {
 
-    app.get("/users", userHandler.getUsers);
+module.exports = function (app, userHandler, validator, userValidators) {
 
-    app.get("/users/:id", userHandler.getUser);
+    app.get("/users", validator.response(userValidators.getAllUsersSchema), userHandler.getUsers);
 
-    app.post("/users", userHandler.createUser);
+    app.get("/users/:id", validator.response(userValidators.getUserSchema), userHandler.getUser);
 
-    app.patch("/users/:id", userHandler.editUser);
+    app.post("/users", validator.body(userValidators.createUserSchema), userHandler.createUser);
+
+    app.patch("/users/:id", validator.body(userValidators.editUserSchema), userHandler.editUser);
 
     app.delete("/users/:id", userHandler.deleteUser);
 }

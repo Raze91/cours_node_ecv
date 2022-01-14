@@ -1,12 +1,12 @@
-module.exports = function (app, postHandler) {
+module.exports = function (app, postHandler, validator, postValidators) {
 
-    app.get("/posts", postHandler.getPosts);
+    app.get("/posts", validator.response(postValidators.getAllPostsSchema), postHandler.getPosts);
 
-    app.get("/posts/:id", postHandler.getPost);
+    app.get("/posts/:id", validator.response(postValidators.getPostSchema), postHandler.getPost);
 
-    app.post("/posts", postHandler.createPost);
+    app.post("/posts", validator.body(postValidators.createPostSchema), postHandler.createPost);
 
-    app.patch("/posts/:id", postHandler.editPost);
+    app.patch("/posts/:id", validator.body(postValidators.editPostSchema), postHandler.editPost);
 
     app.delete("/posts/:id", postHandler.deletePost);
 }

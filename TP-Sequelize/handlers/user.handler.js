@@ -1,16 +1,16 @@
 const { User, Post } = require("../models")
+const createError = require("http-errors");
+
 exports.getUsers = async function getUsers(req, res) {
     try {
         const users = await User.findAll();
         res.send(users);
-
     } catch (e) {
-        console.error(e);
-        res.send("Error");
+        return next(createError(500));
     }
 }
 
-exports.getUser = async function getUser(req, res) {
+exports.getUser = async function getUser(req, res, next) {
     try {
         const user = await User.findOne({ where: { id: req.params.id } });
 
@@ -26,8 +26,7 @@ exports.getUser = async function getUser(req, res) {
         }
 
     } catch (e) {
-        console.error(e);
-        res.send("Error");
+        return next(createError(404));
     }
 }
 
@@ -37,8 +36,7 @@ exports.createUser = async function createUser(req, res) {
         res.json(newUser);
 
     } catch (e) {
-        console.error(e);
-        res.send("Error");
+        return next(createError(500))
     }
 }
 
@@ -56,7 +54,6 @@ exports.deleteUser = async function deleteUser(req, res) {
     try {
         await User.destroy({ where: { id: req.params.id } });
         res.send("User destroyed")
-
     } catch (e) {
         console.error(e);
         res.send("Error");

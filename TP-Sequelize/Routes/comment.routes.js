@@ -5,7 +5,7 @@ const commentHandler = require("../handlers/comment.handler");
 const commentValidators = require("../validators/comment.validator");
 const { CommentMiddleware } = require("../middlewares/comment.middleware");
 
-const validator = require('express-joi-validation').createValidator({});
+const validator = require('express-joi-validation').createValidator({ passError: true });
 
 router.use(CommentMiddleware);
 

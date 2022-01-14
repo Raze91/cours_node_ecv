@@ -5,7 +5,7 @@ const postHandler = require("../handlers/post.handler");
 const postValidators = require("../validators/post.validator");
 const { PostMiddleware } = require("../middlewares/post.middleware");
 
-const validator = require('express-joi-validation').createValidator({});
+const validator = require('express-joi-validation').createValidator({passError: true});
 
 router.use(PostMiddleware);
 

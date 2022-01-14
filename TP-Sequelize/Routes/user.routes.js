@@ -4,7 +4,7 @@ const router = express.Router();
 const userHandler = require("../handlers/user.handler");
 const { UsersMiddleware } = require("../middlewares/user.middleware");
 const userValidators = require("../validators/user.validator");
-const validator = require('express-joi-validation').createValidator({});
+const validator = require('express-joi-validation').createValidator({ passError: true });
 
 
 router.use(UsersMiddleware);

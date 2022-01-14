@@ -3,7 +3,7 @@ const router = express.Router();
 
 const roleHandler = require("../handlers/role.handler");
 const roleValidators = require("../validators/role.validator");
-const validator = require('express-joi-validation').createValidator({});
+const validator = require('express-joi-validation').createValidator({ passError: true });
 
 router.get("/", validator.response(roleValidators.getAllRolesSchema), roleHandler.getRoles)
 router.get("/:id", validator.response(roleValidators.getRoleSchema), roleHandler.getRole)
